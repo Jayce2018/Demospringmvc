@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peace.dao.mapper.QnMapper" >
+
+
+    <resultMap id="map" type="com.peace.entity.unionQn" >
+        <id column="qnid" property="qnid" jdbcType="INTEGER" />
+        <result column="qnname" property="qnname" jdbcType="VARCHAR" />
+        <result column="topicid" property="topicid" jdbcType="INTEGER" />
+        <result column="tocontent" property="tocontent" jdbcType="VARCHAR" />
+        <result column="toorderid" property="toorderid" jdbcType="INTEGER" />
+        <result column="optionid" property="optionid" jdbcType="INTEGER" />
+        <result column="opcontent" property="opcontent" jdbcType="VARCHAR" />
+        <result column="oporderid" property="oporderid" jdbcType="INTEGER" />
+
+    </resultMap>
+    <sql id="Base_Column_List" >
+    topicid, content, qnid, orderid, tixing
+  </sql>
+    <select id="findJg" resultMap="map">
+        select a.qnid,qnname,b.topicid,b.content tocontent,b.orderid toorderid,c.optionid,c.content opcontent,c.orderid oporderid from questionnaire a
+            join topic b on b.qnid=a.qnid
+            join `option` c on c.topicid=b.topicid
+            where a.qnid=#{qnid,jdbcType=INTEGER}
+    </select>
+</mapper>
