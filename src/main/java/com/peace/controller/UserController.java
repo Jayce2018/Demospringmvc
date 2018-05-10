@@ -1,6 +1,5 @@
 package com.peace.controller;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.peace.entity.User;
 import com.peace.service.UserService;
@@ -10,21 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
-    private final UserService userService;
-    private List<User> list=new ArrayList<>();
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private UserService userService;
 
     //根据id获得用户信息
     @RequestMapping(value = "/getUser",method = RequestMethod.GET)
@@ -80,4 +72,24 @@ public class UserController {
         System.out.println("usercontroller:"+users);
         return users;
     }
+
+    //设置缓存用户信息
+    @RequestMapping(value = "/sets")
+    @ResponseBody
+    public String userList(@RequestParam String id,String value) {
+        //调用service方法
+        return userService.sets(id,value);
+    }
+
+    //读取缓存用户信息
+    @RequestMapping(value = "/gets")
+    @ResponseBody
+    public String userList(@RequestParam String id) {
+        //调用service方法
+        return userService.gets(id);
+    }
+
+
+
+
 }

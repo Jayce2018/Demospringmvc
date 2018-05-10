@@ -9,4 +9,8 @@ public interface UserService {
    int updateByselective(User user);
    List<User> selectAll();
    List<User> userList(int n);
+   //缓存设置
+   String gets(String id);
+   String sets(String id,String value);
+
 }

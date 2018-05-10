@@ -20,6 +20,11 @@
     <!--扫描service-->
     <context:component-scan base-package="com.peace.service"/>
 
+    <context:component-scan base-package="com.peace.util"/>
+
+    <!-- 自动扫描SpringMVC包 ,将带有注解的类 纳入spring容器管理 -->
+    <!--context:component-scan base-package="com.peace.*"/-->
+
     <!--HandlerMapping 无需配置，SpringMVC可以默认启动-->
 
     <!--静态资源映射-->
@@ -70,4 +75,5 @@
             </list>
         </property>
     </bean>
+
 </beans>
