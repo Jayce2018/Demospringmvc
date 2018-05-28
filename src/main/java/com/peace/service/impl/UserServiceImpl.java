@@ -13,9 +13,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private  UserMapper userMapper;
 
-    //@Resource(name = "redisCache")
-    //private RedisTemplate<String, String> cacheRedisTemplate;
-
     @Autowired
     private RedisTem redisTem;
 

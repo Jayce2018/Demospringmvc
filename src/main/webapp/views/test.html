@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+        })
+    </script>
+</head>
+<body>
+<h3 id="h3cc">功能测试</h3>
+<from>
+    <input id="bt" value="触发" name="bt" type="button"/>
+</from>
+<script>
+    /*var jsonObject = {
+        "userId":"admin",
+        "password":1
+    };
+    var jdata={userId:"admin"};
+    $.ajax({
+        url : "http://10.0.1.46:8080/springmvc/user/getUser",
+        type : "post",
+        async : true,
+        //contentType : "application/json",
+        data :jdata,
+        dataType : 'json',
+        success : function(data) {
+            alert(data.type);
+        }
+    });*/
+    var jsonMessage = {result:"[{'num':'成绩', '外语':88, '历史':65, '地理':99, 'object':{'aaa':'1111','bbb':'2222','cccc':'3333'}}," +
+        "{'num':'兴趣', '外语':28, '历史':45, '地理':19, 'object':{'aaa':'11a11','bbb':'2222','cccc':'3333'}}," +
+        "{'num':'爱好', '外语':48, '历史':62, '地理':39, 'object':{'aaa':'11c11','bbb':'2222','cccc':'3333'}}]"};
+    $.ajax({
+        url : "http://10.0.1.46:8080/springmvc/user/testJson",
+        type : "post",
+        async : true,
+        //contentType : "application/json",
+        data : jsonMessage,
+        dataType : 'json',
+        success : function(data) {
+            alert(data);
+        }
+    });
+</script>
+</body>
+</html>
