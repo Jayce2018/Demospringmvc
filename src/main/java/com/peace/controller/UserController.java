@@ -3,10 +3,12 @@ package com.peace.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
+import com.peace.entity.NewUser;
 import com.peace.entity.User;
 import com.peace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,14 +21,29 @@ public class UserController {
     private UserService userService;
 
     //接收复杂JSON测试
-    @RequestMapping(value = "/testJson")
+    @RequestMapping(value = "/paramJson")
     @ResponseBody
-    public void testJson(@RequestParam String result){
-        JSONArray arr = (JSONArray) JSONArray.parse(result);
+    public String paramJson(@RequestParam String result){
+        /*JSONArray arr = (JSONArray) JSONArray.parse(result);
         for(int i=0;i<arr.size();i++){
             System.out.println(arr.get(i).toString());
-        }
-        System.out.println("UserController==================================================测试复杂JSON！"+result);
+        }*/
+        System.out.println("UserController====paramJson==============================================测试JSON！"+result);
+
+        return "success";
+    }
+
+    //接收复杂JSON测试
+    @RequestMapping(value = "/bodyJson")
+    @ResponseBody
+    public String bodyJson(@RequestBody NewUser[] result){
+        /*JSONArray arr = (JSONArray) JSONArray.parse(result);
+        for(int i=0;i<arr.size();i++){
+            System.out.println(arr.get(i).toString());
+        }*/
+        System.out.println("UserController====bodyJson==============================================测试JSON！"+result);
+
+        return "success";
     }
 
     //根据id获得用户信息
