@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传图片</title>
+    <script src="../js/jquery-1.11.0.min.js"></script>
+</head>
+<body>
+<div class="row">
+    <span class="personattr">照片:</span>
+    <input type="hidden" name="img"  id="thumbUrl"/>
+    <input type="file" name="logoFile" id="logoFile" onchange="setImg(this);">
+    <span><img id="thumburlShow" src="" width="400" height="400"/></span>
+</div>
+
+<script>
+    function setImg(obj){//用于进行图片上传，返回地址
+
+        var f=$(obj).val();
+        alert(/\.(?:png|jpg|bmp|gif|PNG|JPG|BMP|GIF)$/.test(f));
+        if(f == null || f ==undefined || f == ''){
+            return false;
+        }
+        if(!/\.(?:png|jpg|bmp|gif|PNG|JPG|BMP|GIF)$/.test(f))
+        {
+            alert("类型必须是图片(.png|jpg|bmp|gif|PNG|JPG|BMP|GIF)");
+            $(obj).val('');
+            return false;
+        }
+        var data = new FormData();
+        $.each($(obj)[0].files,function(i,file){
+            data.append('file', file);
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "http://10.0.1.46:8080/springmvc/common/uploadImg",
+            data: data,
+            cache: false,
+            contentType: false,    //不可缺
+            processData: false,    //不可缺
+            dataType:"json",
+            success: function(suc) {
+                if(suc.code==0){
+                    $("#thumbUrl").val(suc.message);//将地址存储好
+                    $("#thumburlShow").attr("src",suc.message);//显示图片
+                    alert(suc.message);
+                }else{
+                    alertLayel("上传失败");
+                    $("#url").val("");
+                    $(obj).val('');
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alertLayel("上传失败，请检查网络后重试");
+                $("#url").val("");
+                $(obj).val('');
+            }
+        });
+    }
+</script>
+</body>
+</html>

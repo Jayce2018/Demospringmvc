@@ -218,6 +218,12 @@
             <version>1.10</version>
         </dependency>
 
+        <dependency>
+            <groupId>xin.xihc</groupId>
+            <artifactId>CommonUtils</artifactId>
+            <version>1.11</version>
+        </dependency>
+
     </dependencies>
 
     <build>
