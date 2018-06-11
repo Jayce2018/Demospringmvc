@@ -2,13 +2,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
                          http://www.springframework.org/schema/context
                         http://www.springframework.org/schema/context/spring-context-4.3.xsd
                         http://www.springframework.org/schema/mvc
-                        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd">
     <!--启用spring的一些annotation -->
     <context:annotation-config/>
 
@@ -29,9 +31,9 @@
 
     <!--静态资源映射-->
     <!--本项目把静态资源放在了WEB-INF的子目录下，资源映射如下-->
-    <mvc:resources mapping="/css/**" location="/css/"/>
+    <!--<mvc:resources mapping="/css/**" location="/css/"/>-->
     <mvc:resources mapping="/js/**" location="/js/"/>
-    <mvc:resources mapping="/image/**" location="/image/"/>
+    <!--<mvc:resources mapping="/image/**" location="/image/"/>-->
 
     <!-- 配置注解驱动 可以将request参数与绑定到controller参数上 -->
     <mvc:annotation-driven/>
@@ -75,5 +77,17 @@
             </list>
         </property>
     </bean>
+
+    <!--<bean id="UserService" class="com.peace.service.impl.UserServiceImpl"></bean>-->
+    <!--切面配置-->
+    <bean id="TimeHandler" class="com.peace.aop.handler.TimeHandler"></bean>
+
+    <aop:config>
+        <aop:aspect id="time" ref="TimeHandler">
+            <aop:pointcut id="allMethod" expression="execution(* com.peace.service.impl.*.*(..))"/>
+            <aop:before method="printTime" pointcut-ref="allMethod"/>
+            <aop:after method="printTime" pointcut-ref="allMethod"/>
+        </aop:aspect>
+    </aop:config>
 
 </beans>

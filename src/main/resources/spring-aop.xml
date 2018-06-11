@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+    <bean id="HelloImpl" class="com.peace.aop.service.Impl.HelloImpl"></bean>
+    <bean id="HelloImpl2" class="com.peace.aop.service.Impl.HelloImpl2"></bean>
+    <!--切面配置-->
+    <bean id="TimeHandler" class="com.peace.aop.handler.TimeHandler"></bean>
+
+    <aop:config>
+        <aop:aspect id="time" ref="TimeHandler">
+            <aop:pointcut id="allMethod" expression="execution(* com.peace.aop.service.Hello.*(..))"/>
+            <aop:before method="printTime" pointcut-ref="allMethod"/>
+            <aop:after method="printTime" pointcut-ref="allMethod"/>
+        </aop:aspect>
+    </aop:config>
+
+
+</beans>
