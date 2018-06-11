@@ -26,7 +26,6 @@
 
     <!-- 自动扫描SpringMVC包 ,将带有注解的类 纳入spring容器管理 -->
     <!--context:component-scan base-package="com.peace.*"/-->
-
     <!--HandlerMapping 无需配置，SpringMVC可以默认启动-->
 
     <!--静态资源映射-->
@@ -44,6 +43,17 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+
+    <!--配置拦截器-->
+    <mvc:interceptors>
+        <!-- 使用 bean 定义一个 Interceptor，直接定义在 mvc:interceptors 下面的 Interceptor 将拦截所有的请求 -->
+        <bean class="com.peace.aop.interceptor.MyInterceptor"/>
+        <!--<mvc:interceptor>
+            <mvc:mapping path="/demo/hello.do"/>-->
+        <!-- 定义在 mvc:interceptor 下面的 Interceptor，表示对特定的请求进行拦截 -->
+        <!--<bean class="com.hit.interceptor.LoginInterceptor"/>-->
+        <!--</mvc:interceptor>&ndash;&gt;-->
+    </mvc:interceptors>
 
     <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀(如果最后一个还是表示文件夹,则最后的斜杠不要漏了) 使用JSP-->
     <!-- 默认的视图解析器在上边的解析错误时使用 (默认使用html)- -->
