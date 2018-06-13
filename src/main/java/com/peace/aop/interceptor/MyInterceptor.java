@@ -9,17 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 public class MyInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("==MyInterceptor, preHandle......====================================" + request.getRequestURI() + request.getQueryString());
+        System.out.println("==拦截器：MyInterceptor, preHandle......====================================" + request.getRequestURI() + request.getQueryString());
         return true;
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        System.out.println("==MyInterceptor, postHandle......===================================");
+        System.out.println("==拦截器：MyInterceptor, postHandle......===================================");
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        System.out.println("==MyInterceptor, afterCompletion......==============================");
+        System.out.println("==拦截器：MyInterceptor, afterCompletion......==============================");
     }
 }

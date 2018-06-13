@@ -13,4 +13,6 @@ public interface UserService {
    String gets(String id);
    String sets(String id,String value);
 
+    List<User> selectByAdjust(User user);
+
 }

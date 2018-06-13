@@ -6,6 +6,7 @@ import com.peace.service.UserService;
 import com.peace.util.RedisTem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -57,5 +58,10 @@ public class UserServiceImpl implements UserService {
         }catch (Exception e){
             return "设置失败";
         }
+    }
+
+    @Override
+    public List<User> selectByAdjust(User user) {
+        return userMapper.selectUserByAdjust(user);
     }
 }

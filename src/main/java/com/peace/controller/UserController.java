@@ -1,14 +1,11 @@
 package com.peace.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.peace.entity.NewUser;
 import com.peace.entity.User;
 import com.peace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,6 +42,19 @@ public class UserController {
 
         return "success";
     }
+
+    //验证登录
+    @RequestMapping("/login")
+    @ResponseBody
+    public int login(@RequestParam String userId, @RequestParam String passwords) {
+        User user = new User();
+        user.setId(userId);
+        user.setPassword(passwords);
+        int size = userService.selectByAdjust(user).size();
+
+        return size > 0 ? 1 : 0;
+    }
+
 
     //根据id获得用户信息
     @RequestMapping(value = "/getUser")
