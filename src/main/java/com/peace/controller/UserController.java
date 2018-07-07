@@ -33,7 +33,7 @@ public class UserController {
     //接收复杂JSON测试
     @RequestMapping(value = "/bodyJson")
     @ResponseBody
-    public String bodyJson(@RequestBody NewUser[] result){
+    public String bodyJson(@RequestBody NewUser result) {
         /*JSONArray arr = (JSONArray) JSONArray.parse(result);
         for(int i=0;i<arr.size();i++){
             System.out.println(arr.get(i).toString());

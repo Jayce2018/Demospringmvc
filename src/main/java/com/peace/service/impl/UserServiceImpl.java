@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     public List<User> selectAll() {
         //cacheRedisTemplate.opsForList().leftPush("list","a");
         //cacheRedisTemplate.opsForList().leftPush("list","b");
-        //System.out.println("UserServiceImpl================================"+cacheRedisTemplate.opsForList().leftPop("list"));
+        System.out.println("UserServiceImpl================    ================");
         return  userMapper.selectAll();
     }
 

@@ -24,6 +24,57 @@
     <!-- 引入同文件夹下的Spring-aop配置文件 -->
     <!--<import resource="spring-aop.xml"/>-->
 
+    <!--定时任务的实现-->
+    <!-- cronTrigger实现方式 -->
+    <bean name="exampleJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.peace.entity.ReportTimerTask"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="timeout" value="3600"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="cronTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="exampleJob"/>
+        <!-- run every morning at 6 AM -->
+        <!-- <property name="cronExpression" value="0 0 6 * * ?" /> -->
+        <!-- <property name="cronExpression" value="0 0/1 * * * ?" /> --><!-- 每分钟 -->
+        <property name="cronExpression" value="0/6 * * * * ? *"/> <!-- 每秒 -->
+    </bean>
+
+    <bean id="timeHandler" class="com.peace.aop.handler.TimeHandler"/>
+
+    <!-- simpleTrigger实现方式 -->
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="timeHandler"/>
+        <property name="targetMethod" value="orderSimplePrintTime"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="simpleTrigger"
+          class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <!-- see the example of method invoking job above -->
+        <property name="jobDetail" ref="jobDetail"/>
+        <!-- 0 seconds -->
+        <property name="startDelay" value="0"/>
+        <!-- repeat every 5 seconds -->
+        <property name="repeatInterval" value="20000"/>
+        <!--重复次数-->
+        <property name="repeatCount" value="3"/>
+    </bean>
+
+    <!-- 总调度用于启动Spring定时器 -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger"/>
+                <ref bean="simpleTrigger"/>
+            </list>
+        </property>
+    </bean>
+
     <!-- dataSource 配置 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 基本属性 url、user、password -->
@@ -31,6 +82,7 @@
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
+
 
         <!-- 配置初始化大小、最小、最大 -->
         <property name="initialSize" value="${ds.initialSize}"/>
@@ -62,14 +114,14 @@
     <!-- mybatis文件配置，扫描所有mapper.xml文件 -->
     <!-- 配置mybatisSqlSessionFactoryBean -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:mybatis.xml"/>
         <property name="mapperLocations" value="classpath*:com/peace/dao/xml/*Mapper.xml"/>
     </bean>
 
     <!-- 配置SqlSessionTemplate -->
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
     <!-- 配置mybatis mapper接口，扫描所有dao -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

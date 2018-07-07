@@ -250,29 +250,29 @@
     SELECT * FROM user
   </select>
 
-  <select id="selectUserByAdjust"  parameterType="com.peace.entity.User" resultType="java.util.Map">
+  <select id="selectUserByAdjust" parameterType="com.peace.entity.User" resultType="java.util.Map">
     SELECT * FROM user
     <where>
       <if test="id != null">
-      and id = #{id,jdbcType=VARCHAR}
+        and id = #{id,jdbcType=VARCHAR}
       </if>
       <if test="password != null">
-      and password = #{password,jdbcType=VARCHAR}
+        and password = #{password,jdbcType=VARCHAR}
       </if>
       <if test="name != null">
-      and name = #{name,jdbcType=VARCHAR}
+        and name = #{name,jdbcType=VARCHAR}
       </if>
       <if test="type != null">
-      and type = #{type,jdbcType=VARCHAR}
+        and type = #{type,jdbcType=VARCHAR}
       </if>
       <if test="gender != null">
-      and gender = #{gender,jdbcType=VARCHAR}
+        and gender = #{gender,jdbcType=VARCHAR}
       </if>
       <if test="date != null">
-      and date = #{date,jdbcType=DATE}
+        and date = #{date,jdbcType=DATE}
       </if>
       <if test="flag != null">
-      and flag = #{flag,jdbcType=INTEGER}
+        and flag = #{flag,jdbcType=INTEGER}
       </if>
     </where>
   </select>
